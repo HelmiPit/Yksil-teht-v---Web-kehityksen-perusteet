@@ -68,7 +68,7 @@ h2 {
   margin-bottom: 18px;
 }
 
-/* sivuston päärakenne */
+/* Sivuston päärakenne */
 #app {
   min-height: 100vh;
   display: flex;
@@ -518,7 +518,7 @@ form button:hover,
 }
 
 
-/* Profiilin otsikko ja pieni avatar */
+/* Profiilin otsikko ja pieni profiilikuva */
 .profile-heading {
   display: flex;
   align-items: center;
@@ -546,7 +546,7 @@ form button:hover,
   display: none;
 }
 
-/* Avatarin lataaminen */
+/* Profiilikuvan lataaminen */
 .avatar-section {
   margin-bottom: 20px;
 }
