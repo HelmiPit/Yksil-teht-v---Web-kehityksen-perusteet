@@ -1,0 +1,722 @@
+:root {
+  --alice-blue: #E5EFFD;
+  --icy-blue: #BAD9FC;
+  --alice-blue-2: #E0EDFD;
+  --maya-blue: #7EBEFC;
+  --pale-sky: #C9E0FC;
+
+  --text-color: #243247;
+  --border-color: #d5e0ed;
+  --white: #ffffff;
+  --button-hover: #4f9fe8;
+}
+
+/* Perusasetuksia */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--alice-blue);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+.restaurant-card:focus-visible {
+  outline: 3px solid #2769a5;
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  overflow-wrap: anywhere;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.3;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+/* sivuston päärakenne */
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 28px;
+  padding-bottom: 40px;
+  
+}
+
+/* Header */
+.site-header {
+  padding: 24px 0 0;
+  background-color: var(--icy-blue);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 0 5% 24px;
+}
+
+.header-text {
+  min-width: 0;
+}
+
+.header-text h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: var(--text-color);
+}
+
+.header-text p {
+  margin: 0;
+}
+
+/* Kirjautumisnappi ja käyttäjäikoni */
+.account-button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-width: 100%;
+  padding: 11px 16px;
+  border: 1px solid var(--white);
+  border-radius: 8px;
+  background-color: var(--alice-blue);
+  color: var(--text-color);
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.account-button:hover {
+  background-color: var(--white);
+}
+
+.account-button svg {
+  display: block;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.account-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+
+/* Poista käyttäjätili (nappi) */
+.delete-button {
+  background-color: #dc2626;
+  color: white;
+  border: 1px solid #dc2626;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #b91c1c;
+  border-color: #b91c1c;
+}
+
+/* Navigaatio */
+.site-nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 5%;
+  background-color: var(--maya-blue);
+}
+
+.nav-link {
+  padding: 9px 18px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #172b40;
+  font-weight: bold;
+}
+
+.nav-link:hover,
+.nav-link[aria-current="page"] {
+  border-color: var(--white);
+  background-color: var(--white);
+}
+
+/* Ravintolanäkymä */
+#restaurants-view {
+  display: block;
+}
+
+/* Suodattimet/filtterit */
+.filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+select,
+input {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid #aabbd0;
+  border-radius: 6px;
+  background-color: var(--white);
+  color: var(--text-color);
+}
+
+select {
+  cursor: pointer;
+}
+
+/* Ravintola ja ruokalista (vierekkäin) */
+.restaurant-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.restaurant-section,
+.menu-section,
+.content-panel {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background-color: var(--white);
+  box-shadow: 0 3px 12px rgb(30 60 90 / 6%);
+}
+
+.restaurant-section,
+.menu-section {
+  min-height: 200px;
+}
+
+/* Lomakkeet ja napit */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+form button,
+.menu-options button,
+.secondary-button {
+  align-self: flex-start;
+  padding: 10px 16px;
+  border: 1px solid var(--maya-blue);
+  border-radius: 6px;
+  background-color: var(--maya-blue);
+  color: #172b40;
+  font-weight: bold;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+form button:hover,
+.menu-options button:hover,
+.secondary-button:hover {
+  background-color: var(--button-hover);
+  color: var(--white);
+}
+
+.form-message {
+  min-height: 1.5em;
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+.secondary-button {
+  margin-top: 18px;
+  border-color: var(--border-color);
+  background-color: var(--alice-blue);
+  color: var(--text-color);
+}
+
+/* Ravintolalistan kortit */
+#restaurant-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+#restaurant-list > * {
+  min-width: 0;
+}
+
+#restaurant-list .restaurant-card {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: var(--white);
+  box-shadow: 0 2px 8px rgb(30 60 90 / 8%);
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.restaurant-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.restaurant-card p {
+  margin: 4px 0;
+}
+
+#restaurant-list .restaurant-card:hover {
+  background-color: var(--alice-blue-2);
+  border-color: var(--maya-blue);
+  box-shadow: 0 3px 10px rgb(30 60 90 / 12%);
+}
+
+#restaurant-list .restaurant-card.selected,
+#restaurant-list .restaurant-card.selected:hover {
+  background-color: var(--icy-blue);
+  border: 2px solid var(--button-hover);
+  box-shadow: 0 3px 10px rgb(30 60 90 / 18%);
+}
+
+#selected-restaurant {
+  font-weight: bold;
+}
+
+/* Ruokalistat */
+.menu-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+#menu-content {
+  min-width: 0;
+}
+
+.course-list {
+  padding-left: 20px;
+}
+
+.menu-day,
+.weekly-menu-day {
+  margin: 20px 0 12px;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: var(--alice-blue-2);
+}
+
+.menu-day h3,
+.weekly-menu-day h3 {
+  margin-top: 0;
+}
+
+.course-item {
+  margin-bottom: 12px;
+  padding: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: #fbfdff;
+}
+
+.course-item h3,
+.course-item h4 {
+  margin: 0 0 8px;
+}
+
+.course-item p {
+  margin: 5px 0;
+}
+
+/* Profiili ja kirjautumisdialogi */
+.profile-panel form {
+  margin-top: 20px;
+}
+
+.account-dialog {
+  width: min(900px, 92%);
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  background-color: var(--white);
+  color: var(--text-color);
+  box-shadow: 0 12px 40px rgb(0 0 0 / 20%);
+}
+
+.account-dialog[open] {
+  animation: dialog-appear 0.2s ease-out;
+}
+
+.account-dialog::backdrop {
+  background-color: rgb(20 35 55 / 35%);
+  backdrop-filter: blur(5px);
+}
+
+.header-account {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.dialog-header h2 {
+  margin: 0;
+}
+
+.close-dialog {
+  display: flex;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--alice-blue-2);
+  color: var(--text-color);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.close-dialog:hover {
+  background-color: var(--pale-sky);
+}
+
+.account-forms {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 24px;
+}
+
+.account-panel {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: #fbfdff;
+}
+
+.account-panel h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+.account-form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field input {
+  min-height: 44px;
+}
+
+.account-form button {
+  width: 100%;
+  min-height: 44px;
+  margin-top: auto;
+}
+
+.account-form .form-message {
+  min-height: 3em;
+  margin: 0;
+}
+
+.avatar-section {
+  margin-bottom: 1.5rem;
+}
+
+
+/* Profiilin otsikko ja pieni avatar */
+.profile-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.profile-heading h3 {
+  margin: 0;
+}
+
+.profile-avatar {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #7ebefc;
+  background-color: #e5effd;
+}
+
+/* Piilotetaan kuva, jos käyttäjällä ei ole avataria. */
+.profile-avatar[hidden] {
+  display: none;
+}
+
+/* Avatarin lataaminen */
+.avatar-section {
+  margin-bottom: 20px;
+}
+
+.avatar-section h4 {
+  margin-bottom: 10px;
+}
+
+.avatar-section .form-field {
+  margin-bottom: 12px;
+}
+
+.header-avatar {
+  display: block;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  background-color: var(--alice-blue);
+}
+
+@keyframes dialog-appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer */
+.site-footer {
+  margin-top: auto;
+  padding: 18px 5%;
+  background-color: var(--icy-blue);
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-icon {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Suosikkiravintolan osio profiilissa */
+.favorite-restaurant-section {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+
+.favorite-restaurant-section h4 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+#favorite-restaurant-content {
+  padding: 1.25rem;
+  background-color: #E5EFFD;
+  border: 1px solid #BAD9FC;
+  border-radius: 16px;
+}
+
+/* Mobiilinäkymä */
+@media screen and (max-width: 900px) {
+  .restaurant-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .container {
+    width: 92%;
+  }
+
+  .site-header {
+    padding-top: 20px;
+  }
+
+  .header-content {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 20px;
+  }
+
+  .account-button {
+    align-self: flex-start;
+  }
+
+  .site-nav {
+    padding: 10px 4%;
+  }
+
+  .main-content {
+    padding-top: 18px;
+    padding-bottom: 28px;
+  }
+
+  .main-content {
+  background-image: url('./images/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+  .restaurant-section,
+  .menu-section,
+  .content-panel {
+    padding: 18px;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .account-dialog {
+    width: 94%;
+    max-height: 90vh;
+    padding: 18px;
+  }
+
+  .account-forms {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .account-panel {
+    padding: 16px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .menu-options {
+    flex-direction: column;
+  }
+
+  .menu-options button {
+    width: 100%;
+  }
+
+  .nav-link {
+    padding: 8px 12px;
+  }
+
+  .dialog-header h2 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Piilotetut elementit */
+[hidden] {
+  display: none !important;
+}

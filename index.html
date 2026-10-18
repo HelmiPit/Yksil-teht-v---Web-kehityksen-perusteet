@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./images/logo.png" />
+    <meta
+      name="description"
+      content="Löydä opiskelijaravintolat ja tutustu niiden ruokalistoihin."
+    />
+    <title>Opiskelijaravintolat</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <header class="site-header">
+        <div class="header-content">
+          <div class="header-text">
+            <h1 class="page-title">
+              <img
+                src="./images/logo.png"
+                alt=""
+                class="title-icon"
+              />
+              <span>Opiskelijaravintolat</span>
+            </h1>
+            <p>Löydä opiskelijaravintolat ja tutustu ruokalistoihin.</p>
+          </div>
+
+          <div class="header-account">
+            <img
+              id="header-avatar"
+              class="header-avatar"
+              alt="Oma profiilikuva"
+              hidden
+            />
+
+            <button
+              id="account-button"
+              class="account-button"
+              type="button"
+              aria-label="Kirjaudu sisään tai rekisteröidy"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M5 21v-2a7 7 0 0 1 14 0v2"></path>
+              </svg>
+              <span id="account-button-label">
+                Kirjaudu sisään / Rekisteröidy
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="container main-content">
+        <section id="restaurants-view">
+          <div class="filters">
+            <div class="filter-group">
+              <label for="city-filter">Kaupunki</label>
+              <select id="city-filter">
+                <option value="">Kaikki kaupungit</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="provider-filter">Palveluntarjoaja</label>
+              <select id="provider-filter">
+                <option value="">Kaikki palveluntarjoajat</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="restaurant-layout">
+            <section class="restaurant-section content-panel">
+              <h2>Ravintolat</h2>
+              <p>Valitse ravintola</p>
+
+              <div id="restaurant-list" aria-live="polite">
+                Haetaan ravintoloita...
+              </div>
+            </section>
+
+            <section class="menu-section content-panel">
+              <h2>Ruokalistat</h2>
+              <p id="selected-restaurant"></p>
+
+              <div class="menu-options">
+                <button id="daily-menu" type="button">
+                  Päivän ruokalista
+                </button>
+                <button id="weekly-menu" type="button">
+                  Viikon ruokalista
+                </button>
+              </div>
+
+              <p id="menu-message" aria-live="polite">
+                Valitse ruokalista
+              </p>
+
+              <div id="menu-content" aria-live="polite"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      <dialog id="account-dialog" class="account-dialog">
+        <div class="dialog-header">
+          <h2 id="dialog-title">Kirjaudu sisään tai rekisteröidy</h2>
+
+          <button
+            id="close-dialog"
+            class="close-dialog"
+            type="button"
+            aria-label="Sulje ikkuna"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div class="account-forms">
+          <div class="account-panel">
+            <h3>Kirjaudu sisään</h3>
+
+            <form id="login-form" class="account-form">
+              <div class="form-field">
+                <label for="login-username">Käyttäjätunnus</label>
+                <input
+                  id="login-username"
+                  name="username"
+                  type="text"
+                  autocomplete="username"
+                  required
+                />
+              </div>
+
+              <div class="form-field">
+                <label for="login-password">Salasana</label>
+                <input
+                  id="login-password"
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  required
+                />
+              </div>
+
+              <button type="submit">Kirjaudu sisään</button>
+
+              <p
+                id="login-message"
+                class="form-message"
+                aria-live="polite"
+              ></p>
+            </form>
+          </div>
+
+          <div class="account-panel">
+            <h3>Luo käyttäjätili</h3>
+
+            <form id="register-form" class="account-form">
+              <div class="form-field">
+                <label for="register-username">Käyttäjätunnus</label>
+                <input
+                  id="register-username"
+                  name="username"
+                  type="text"
+                  autocomplete="username"
+                  minlength="3"
+                  maxlength="50"
+                  pattern="\S+"
+                  title="Käyttäjätunnuksen pitää olla 3–50 merkkiä pitkä eikä se saa sisältää välilyöntejä."
+                  required
+                />
+                <small>
+                  3–50 merkkiä. Älä käytä välilyöntejä.
+                </small>
+              </div>
+
+              <div class="form-field">
+                <label for="register-email">Sähköposti</label>
+                <input
+                  id="register-email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  pattern=".+@metropolia\.fi"
+                  placeholder="nimi@metropolia.fi"
+                  title="Käytä Metropolian sähköpostiosoitetta, esimerkiksi nimi@metropolia.fi."
+                  required
+                />
+                <small>
+                  Käytä @metropolia.fi-päätteistä sähköpostiosoitetta.
+                </small>
+              </div>
+
+              <div class="form-field">
+                <label for="register-password">Salasana</label>
+                <input
+                  id="register-password"
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  minlength="8"
+                  title="Salasanan pitää olla vähintään 8 merkkiä pitkä."
+                  required
+                />
+                <small>Vähintään 8 merkkiä. Valitse vahva salasana.</small>
+              </div>
+
+              <div class="form-field">
+                <label for="register-password-confirm">
+                  Vahvista salasana
+                </label>
+                <input
+                  id="register-password-confirm"
+                  name="password-confirm"
+                  type="password"
+                  autocomplete="new-password"
+                  title="Kirjoita sama salasana uudelleen."
+                  required
+                />
+              </div>
+
+              <button type="submit">Rekisteröidy</button>
+
+              <p
+                id="register-message"
+                class="form-message"
+                aria-live="polite"
+              ></p>
+            </form>
+          </div>
+        </div>
+
+        <section class="profile-panel" hidden>
+          <div class="profile-heading">
+            <h3>Omat tiedot</h3>
+
+            <img
+              id="avatar-target"
+              class="profile-avatar"
+              alt="Oma profiilikuva"
+              hidden
+            />
+          </div>
+
+          <div class="avatar-section">
+            <h4>Profiilikuva</h4>
+
+            <form id="avatar-form" class="account-form">
+              <div class="form-field">
+                <label for="avatar">Valitse profiilikuva</label>
+                <input
+                  id="avatar"
+                  name="avatar"
+                  type="file"
+                  accept="image/*"
+                  required
+                />
+              </div>
+
+              <button type="submit">Tallenna profiilikuva</button>
+
+              <p
+                id="avatar-message"
+                class="form-message"
+                aria-live="polite"
+              ></p>
+            </form>
+          </div>
+
+          <form id="profile-form" class="account-form">
+            <div class="form-field">
+              <label for="profile-username">Käyttäjätunnus</label>
+              <input
+                id="profile-username"
+                name="username"
+                type="text"
+                autocomplete="username"
+                minlength="3"
+                maxlength="50"
+                pattern="\S+"
+                title="Käyttäjätunnuksen pitää olla 3–50 merkkiä pitkä eikä se saa sisältää välilyöntejä."
+                required
+              />
+              <small>
+                3–50 merkkiä. Älä käytä välilyöntejä.
+              </small>
+            </div>
+
+            <div class="form-field">
+              <label for="profile-email">Sähköposti</label>
+              <input
+                id="profile-email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                pattern=".+@metropolia\.fi"
+                placeholder="nimi@metropolia.fi"
+                title="Käytä Metropolian sähköpostiosoitetta, esimerkiksi nimi@metropolia.fi."
+                required
+              />
+              <small>
+                Käytä @metropolia.fi-päätteistä sähköpostiosoitetta.
+              </small>
+            </div>
+
+            <button type="submit">Tallenna tiedot</button>
+
+            <p
+              id="profile-message"
+              class="form-message"
+              aria-live="polite"
+            ></p>
+          </form>
+
+          <section class="favorite-restaurant-section">
+            <h4>Suosikkiravintola</h4>
+            <div id="favorite-restaurant-content">
+              Et ole vielä valinnut suosikkiravintolaa.
+            </div>
+          </section>
+
+          <button
+            id="logout-button"
+            class="secondary-button"
+            type="button"
+          >
+            Kirjaudu ulos
+          </button>
+
+          <button
+            id="delete-account-button"
+            class="delete-button"
+            type="button"
+          >
+            Poista käyttäjätili
+          </button>
+        </section>
+      </dialog>
+
+      <footer class="site-footer">
+        <p>Opiskelijaravintolat</p>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
